@@ -18,15 +18,27 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const ShowWeather = ({data}) => {
+  if (!data) return null
+  const { name } = data
+  return (
+    <div>
+      {`${data.weather[0].description} in ${name}`}
+    </div>
+  )
+}
+
 const useWeatherFetch = (country, subdivision) => {
   const [weather, setWeather] = useState(null)
   useEffect(() => {
-    const fetchWeather = async () => {
-      const weather = await axios(`http://localhost:9000/weather/${country}/${subdivision}`)
-      console.log(weather)
-      setWeather(weather)
+    if (subdivision) {
+      const fetchWeather = async () => {
+        const weather = await axios(`http://localhost:9000/weather/${country}/${subdivision}`)
+        console.log(weather)
+        setWeather(weather.data)
+      }
+      fetchWeather()
     }
-    fetchWeather()
   }, [subdivision])
   return weather
 }
@@ -111,7 +123,8 @@ const Weather = () => {
                 })
               }
             </NativeSelect>
-          </FormControl>     
+          </FormControl> 
+          <ShowWeather data={weather}/>
         </Grid>
       </Grid>
 
