@@ -27,7 +27,7 @@ const Weather = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const countries = await axios('https://restcountries.eu/rest/v2/all')
+      const countries = await axios('http://localhost:9000/countries')
       setCountries(countries.data)
     }
     fetchCountries()

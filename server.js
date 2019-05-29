@@ -1,11 +1,19 @@
 const express = require('express')
-const path = require('path')
 const app = express()
+const cors = require('cors')
+const axios = require('axios')
 
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(cors())
+app.get('/', (req, res) => res.send('Hello World!'))
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+const getCountries = async () => {
+  const countries = await axios('https://restcountries.eu/rest/v2/all')
+  return countries && countries.data
+}
+
+app.get('/countries', async (req, res) => {
+  const countries = await getCountries()
+  res.status(200).json(countries)
 })
 
 app.listen(9000)
