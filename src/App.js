@@ -1,14 +1,14 @@
-import React from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
-import Select from '@material-ui/core/Select'
+import NativeSelect from '@material-ui/core/NativeSelect'
 import FormControl from '@material-ui/core/FormControl'
-import MenuItem from '@material-ui/core/MenuItem'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
+  import OutlinedInput from '@material-ui/core/OutlinedInput'
 import InputLabel from '@material-ui/core/InputLabel'
+import axios from 'axios'
 import './App.css';
 
 const useStyles = makeStyles(theme => ({
@@ -20,23 +20,35 @@ const useStyles = makeStyles(theme => ({
 
 const Weather = () => {
   const classes = useStyles()
-  const inputLabel = React.useRef(null)
+  const inputLabel = useRef(null)
 
-  const [values, setValues] = React.useState({
-    country: ''
-  });
+  const [countries, setCountries] = useState([])
+  const [country, setCountry] = useState('')
 
-  const [labelWidth, setLabelWidth] = React.useState(0)
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const countries = await axios('https://restcountries.eu/rest/v2/all')
+      setCountries(countries.data)
+    }
+    fetchCountries()
+  }, [])
+
+  useEffect(() => {
+    if (country !== '') {
+      const fetchStates = async () => {
+        const states = await axios(`http://services.groupkt.com/state/get/${country}/all`)
+        console.log(states)
+      }
+      fetchStates()
+    }
+  }, [country])
+
+  const [labelWidth, setLabelWidth] = useState(0)
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth)
   }, [])
 
-  const handleChange = (event) => {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value,
-    }));
-  }
+  const handleCountry = event => setCountry(event.target.value)
 
   return (
     <Container maxWidth="xs">
@@ -45,22 +57,20 @@ const Weather = () => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel ref={inputLabel} htmlFor="country">
+            <InputLabel ref={inputLabel} htmlFor="field-country">
               Country
             </InputLabel>
-            <Select
-              value={values.country}
-              onChange={handleChange}
-              input={<OutlinedInput labelWidth={labelWidth} name="country" id="country" />}
+            <NativeSelect
+              value={country}
+              onChange={handleCountry}
+              input={<OutlinedInput labelWidth={labelWidth} name="field-country" id="country" />}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={'US'}>USA</MenuItem>
-              <MenuItem value={'IN'}>India</MenuItem>
-              <MenuItem value={'BR'}>Brazil</MenuItem>
-              <MenuItem value={'UK'}>United Kingdom</MenuItem>
-            </Select>
+              <option value=""/>
+              {countries.length > 0 && 
+               countries.map((country, index) => {
+                return <option key={index} value={country.alpha3Code}>{country.name}</option>
+              })}
+            </NativeSelect>
           </FormControl>
         </Grid>
       </Grid>
