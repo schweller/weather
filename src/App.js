@@ -35,8 +35,9 @@ const Weather = () => {
 
   useEffect(() => {
     if (country !== '') {
+      console.log(country)
       const fetchStates = async () => {
-        const states = await axios(`http://services.groupkt.com/state/get/${country}/all`)
+        const states = await axios(`http://localhost:9000/countries/subdivisions/${country}`)
         console.log(states)
       }
       fetchStates()
