@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import FormControl from '@material-ui/core/FormControl'
-  import OutlinedInput from '@material-ui/core/OutlinedInput'
+import OutlinedInput from '@material-ui/core/OutlinedInput'
 import InputLabel from '@material-ui/core/InputLabel'
 import axios from 'axios'
 import './App.css';
@@ -18,12 +18,27 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const useWeatherFetch = (country, subdivision) => {
+  const [weather, setWeather] = useState(null)
+  useEffect(() => {
+    const fetchWeather = async () => {
+      const weather = await axios(`http://localhost:9000/weather/${country}/${subdivision}`)
+      console.log(weather)
+      setWeather(weather)
+    }
+    fetchWeather()
+  }, [subdivision])
+  return weather
+}
+
 const Weather = () => {
   const classes = useStyles()
   const inputLabel = useRef(null)
 
   const [countries, setCountries] = useState([])
   const [country, setCountry] = useState('')
+  const [subdivisions, setSubdivisions] = useState([])
+  const [subdivision, setSubdivision] = useState('')
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -36,13 +51,16 @@ const Weather = () => {
   useEffect(() => {
     if (country !== '') {
       console.log(country)
-      const fetchStates = async () => {
+      const fetchSubdivisions = async () => {
         const states = await axios(`http://localhost:9000/countries/subdivisions/${country}`)
-        console.log(states)
+        console.log(states.data.RestResponse.result)
+        setSubdivisions(states.data.RestResponse.result)
       }
-      fetchStates()
+      fetchSubdivisions()
     }
   }, [country])
+
+  const weather = useWeatherFetch(country, subdivision)
 
   const [labelWidth, setLabelWidth] = useState(0)
   React.useEffect(() => {
@@ -50,6 +68,7 @@ const Weather = () => {
   }, [])
 
   const handleCountry = event => setCountry(event.target.value)
+  const handleSubdivision = event => setSubdivision(event.target.value)
 
   return (
     <Container maxWidth="xs">
@@ -72,7 +91,27 @@ const Weather = () => {
                 return <option key={index} value={country.alpha3Code}>{country.name}</option>
               })}
             </NativeSelect>
-          </FormControl>
+          </FormControl>     
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl variant="outlined" className={classes.formControl} disabled={subdivisions.length===0}>
+            <InputLabel ref={inputLabel} htmlFor="field-subdivisions">
+              Subdivisions
+            </InputLabel>
+            <NativeSelect
+              value={subdivision}
+              onChange={handleSubdivision}
+              input={<OutlinedInput labelWidth={labelWidth} name="field-subdivisions" id="subdivisions" />}
+            >
+              <option value=""/>
+              {
+                subdivisions.length > 0 &&
+                subdivisions.map((sub, index) => {
+                  return <option key={index} value={sub.name}>{sub.name}</option>
+                })
+              }
+            </NativeSelect>
+          </FormControl>     
         </Grid>
       </Grid>
 
