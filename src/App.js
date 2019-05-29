@@ -22,9 +22,9 @@ const ShowWeather = ({data}) => {
   if (!data) return null
   const { name } = data
   return (
-    <div>
+    <Typography variant="h4">
       {`${data.weather[0].description} in ${name}`}
-    </div>
+    </Typography>
   )
 }
 
@@ -34,7 +34,6 @@ const useWeatherFetch = (country, subdivision) => {
     if (subdivision) {
       const fetchWeather = async () => {
         const weather = await axios(`http://localhost:9000/weather/${country}/${subdivision}`)
-        console.log(weather)
         setWeather(weather.data)
       }
       fetchWeather()
@@ -119,7 +118,7 @@ const Weather = () => {
               {
                 subdivisions.length > 0 &&
                 subdivisions.map((sub, index) => {
-                  return <option key={index} value={sub.name}>{sub.name}</option>
+                  return <option key={index} value={sub.capital}>{sub.name}</option>
                 })
               }
             </NativeSelect>
