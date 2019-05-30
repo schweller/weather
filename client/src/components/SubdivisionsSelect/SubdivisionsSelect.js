@@ -11,7 +11,7 @@ const useFetchSubdivisions = (country) => {
   useEffect(() => {
     if (country !== '') {
       const fetchSubdivisions = async () => {
-        const states = await axios(`http://localhost:9000/countries/subdivisions/${country}`)
+        const states = await axios(`http://localhost:9000/api/countries/subdivisions/${country}`)
         setSubdivisions(states.data)
       }
       fetchSubdivisions()

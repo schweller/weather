@@ -10,7 +10,7 @@ const useFetchCountries = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const countries = await axios('http://localhost:9000/countries')
+      const countries = await axios('http://localhost:9000/api/countries')
       setCountries(countries.data)
     }
     fetchCountries()
