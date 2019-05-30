@@ -5,7 +5,9 @@ const dotenv = require('dotenv')
 /**
  * Load environment variables
  */
-dotenv.config({path: '.env' })
+dotenv.config({path: '../.env' })
+
+const routes = require('./routes')
 
 //Security Modules
 const cors = require('cors')
@@ -24,10 +26,7 @@ const app = express()
 
 app.use(rateLimiter)
 app.use(cors())
+app.use('/api', routes)
 app.get('/', (req, res) => res.send('Hello World!'))
-
-app.get('/countries', countriesController.getCountries)
-app.get('/countries/subdivisions/:country', countriesController.getSubdivisionsByCountry)
-app.get('/weather/:country/:subdivision', weatherController.getWeather)
 
 module.exports = app
