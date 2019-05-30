@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { API_BASE } from '../../constants'
+
 import NativeSelect from '@material-ui/core/NativeSelect'
 import FormControl from '@material-ui/core/FormControl'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import InputLabel from '@material-ui/core/InputLabel'
+
 import axios from 'axios'
 
 const useFetchCountries = () => {
@@ -10,7 +13,7 @@ const useFetchCountries = () => {
 
   useEffect(() => {
     const fetchCountries = async () => {
-      const countries = await axios('http://localhost:9000/api/countries')
+      const countries = await axios(`${API_BASE}/countries`)
       setCountries(countries.data)
     }
     fetchCountries()

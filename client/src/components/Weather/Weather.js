@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { API_BASE } from '../../constants'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -29,7 +30,7 @@ const useWeatherFetch = (country, subdivision) => {
   useEffect(() => {
     if (subdivision) {
       const fetchWeather = async () => {
-        const result = await axios(`http://localhost:9000/api/weather/${country}/${subdivision}`)
+        const result = await axios(`${API_BASE}/weather/${country}/${subdivision}`)
           .then(response => response.data)
           .catch(error => handleError(error))
         setWeather(result)

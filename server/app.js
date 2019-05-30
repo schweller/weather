@@ -1,12 +1,14 @@
 //Core Modules
 const express = require('express')
+const path = require('path')
 const dotenv = require('dotenv')
 
 /**
  * Load environment variables
  */
-dotenv.config({path: '../.env' })
+dotenv.config({path: `${path.resolve(__dirname)}/../.env` })
 
+//Routes Module
 const routes = require('./routes')
 
 //Security Modules
