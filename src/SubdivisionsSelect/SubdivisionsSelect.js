@@ -12,7 +12,7 @@ const useFetchSubdivisions = (country) => {
     if (country !== '') {
       const fetchSubdivisions = async () => {
         const states = await axios(`http://localhost:9000/countries/subdivisions/${country}`)
-        setSubdivisions(states.data.RestResponse.result)
+        setSubdivisions(states.data)
       }
       fetchSubdivisions()
     }
