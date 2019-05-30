@@ -11,8 +11,8 @@ dotenv.config({path: '.env' })
 app.use(cors())
 app.get('/', (req, res) => res.send('Hello World!'))
 
-const countriesController = require('./src/controllers/countries')
-const weatherController = require('./src/controllers/weather')
+const countriesController = require('./controllers/countries')
+const weatherController = require('./controllers/weather')
 
 app.get('/countries', countriesController.getCountries)
 app.get('/countries/subdivisions/:country', countriesController.getSubdivisionsByCountry)
