@@ -3945,6 +3945,11 @@ expect@^24.8.0:
     jest-message-util "^24.8.0"
     jest-regex-util "^24.3.0"
 
+express-rate-limit@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/express-rate-limit/-/express-rate-limit-4.0.3.tgz#70ec815f6ba2d6a62400c8a7bd341c420b4330cc"
+  integrity sha512-9+v6DXQdLLd4EqdEkXXM1ctdVNgjw4w8V1WLvlpnIb2SZ5wJ3Kvu8FOMzBPIAX+iO1F24AG640eOOHCv/0GmKg==
+
 express@^4.16.2:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"

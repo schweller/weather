@@ -1,6 +1,5 @@
+//Core Modules
 const express = require('express')
-const app = express()
-const cors = require('cors')
 const dotenv = require('dotenv')
 
 /**
@@ -8,14 +7,27 @@ const dotenv = require('dotenv')
  */
 dotenv.config({path: '.env' })
 
-app.use(cors())
-app.get('/', (req, res) => res.send('Hello World!'))
+//Security Modules
+const cors = require('cors')
+const limiter = require('express-rate-limit')
 
+// Controllers
 const countriesController = require('./controllers/countries')
 const weatherController = require('./controllers/weather')
+
+const rateLimiter = limiter({
+  windowMs: process.env.TIME_PER_MAX_REQUESTS,
+  max: process.env.MAX_REQUESTS
+})
+
+const app = express()
+
+app.use(rateLimiter)
+app.use(cors())
+app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/countries', countriesController.getCountries)
 app.get('/countries/subdivisions/:country', countriesController.getSubdivisionsByCountry)
 app.get('/weather/:country/:subdivision', weatherController.getWeather)
 
-app.listen(9000)
+module.exports = app
