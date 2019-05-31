@@ -25,22 +25,24 @@ const handleError = ({response}) => {
   }
 }
 
-const useWeatherFetch = (country, subdivision) => {
+export const useWeatherFetch = (country, subdivision) => {
   const [weather, setWeather] = useState(null)
+  
   useEffect(() => {
     if (subdivision) {
       const fetchWeather = async () => {
         const result = await axios(`${API_BASE}/weather/${country}/${subdivision}`)
           .then(response => response.data)
           .catch(error => handleError(error))
-        console.log(result)
+        // console.log(result)
+
         setWeather(result)
       }
       fetchWeather()
     }
   }, [subdivision])
 
-  return weather
+  return { weather, setWeather }
 }
 
 export const Weather = () => {
@@ -48,7 +50,7 @@ export const Weather = () => {
   const [country, setCountry] = useState('')
   const [subdivision, setSubdivision] = useState('')
 
-  const weather = useWeatherFetch(country, subdivision)
+  const { weather } = useWeatherFetch(country, subdivision)
 
   const handleCountry = event => setCountry(event.target.value)
   const handleSubdivision = event => setSubdivision(event.target.value)

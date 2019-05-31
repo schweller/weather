@@ -8,22 +8,23 @@ import InputLabel from '@material-ui/core/InputLabel'
 
 import axios from 'axios'
 
-const useFetchCountries = () => {
+export const useFetchCountries = () => {
   const [countries, setCountries] = useState([])
 
   useEffect(() => {
-    const fetchCountries = async () => {
+    async function fetchCountries() {
       const countries = await axios(`${API_BASE}/countries`)
       setCountries(countries.data)
     }
+    
     fetchCountries()
   }, [])
 
-  return countries
+  return { countries, setCountries }
 }
 
 export const CountriesSelect = ({country, handleChange, classes}) => {
-  const countries = useFetchCountries()
+  const { countries } = useFetchCountries()
   const inputLabel = useRef(null)
 
   const [labelWidth, setLabelWidth] = useState(0)

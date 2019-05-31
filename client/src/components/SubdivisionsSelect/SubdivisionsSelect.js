@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 
 import axios from 'axios'
 
-const useFetchSubdivisions = (country) => {
+export const useFetchSubdivisions = (country) => {
   const [subdivisions, setSubdivisions] = useState([])
 
   useEffect(() => {
@@ -21,11 +21,11 @@ const useFetchSubdivisions = (country) => {
     }
   }, [country])
   
-  return subdivisions
+  return {subdivisions, setSubdivisions}
 }
 
 export const SubdivisionsSelect = ({subdivision, country, handleChange, classes}) => {
-  const subdivisions = useFetchSubdivisions(country)
+  const {subdivisions} = useFetchSubdivisions(country)
   const inputLabel = useRef(null)
 
   const [labelWidth, setLabelWidth] = useState(0)

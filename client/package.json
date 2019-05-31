@@ -5,14 +5,11 @@
   "dependencies": {
     "@material-ui/core": "^4.0.1",
     "axios": "^0.18.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
-    "express": "^4.17.1",
-    "express-rate-limit": "^4.0.3",
+    "enzyme": "^3.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "supertest": "^4.0.2"
+    "react-hooks-testing-library": "^0.5.0",
+    "react-scripts": "3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +31,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme-adapter-react-16": "^1.13.2"
   }
 }
