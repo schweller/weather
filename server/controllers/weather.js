@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { OPENWEATHER_API_KEY, OPENWEATHER_API_URI } = require('../constants')
 
 const handleWeatherSuccess = (data) => {
   return { message: `${data.weather[0].description} in ${data.name}` }
@@ -6,7 +7,7 @@ const handleWeatherSuccess = (data) => {
 
 exports.getWeather = async (country, subdivision) => {
   const response = await axios(
-    `http://api.openweathermap.org/data/2.5/weather?q=${subdivision},${country}&APPID=eb212045c90a1d90a521b88ea995cc3a`
+    `${OPENWEATHER_API_URI}/weather?q=${subdivision},${country}&APPID=${OPENWEATHER_API_KEY}`
   )
     .then(result => handleWeatherSuccess(result.data))
     .catch(error => error.response.status)

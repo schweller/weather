@@ -1,6 +1,5 @@
 const app = require('./app')
-
-const SERVERPORT = process.env.SERVERPORT
+const { SERVERPORT } = require('./constants')
 
 const main = async () => {
   app.listen(SERVERPORT)

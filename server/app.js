@@ -1,12 +1,6 @@
 //Core Modules
 const express = require('express')
-const path = require('path')
-const dotenv = require('dotenv')
-
-/**
- * Load environment variables
- */
-dotenv.config({path: `${path.resolve(__dirname)}/../.env` })
+const { TIME_PER_MAX_REQUESTS, MAX_REQUESTS } = require('./constants')
 
 //Routes Module
 const routes = require('./routes')
@@ -16,8 +10,8 @@ const cors = require('cors')
 const limiter = require('express-rate-limit')
 
 const rateLimiter = limiter({
-  windowMs: process.env.TIME_PER_MAX_REQUESTS,
-  max: process.env.MAX_REQUESTS
+  windowMs: TIME_PER_MAX_REQUESTS,
+  max: MAX_REQUESTS
 })
 
 const app = express()
