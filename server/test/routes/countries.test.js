@@ -1,16 +1,13 @@
-const app = require('../../app')
-const request = require('supertest')
 const httpMocks = require('node-mocks-http')
 const nock = require('nock')
 const { getCountriesHandler, getSubdivisionsByCountryHandler } = require('../../routes/countries')
-const { getCountriesFixture, getSubdivisionsByCountryFixture } = require('./countries.fixture') 
-
+const { getCountriesFixture, getSubdivisionsByCountryFixture } = require('./fixtures/countries.fixture') 
 
 describe('/api/countries Suite', () => {
   describe('GET /api/countries', () => {
     beforeEach(() => {
-      nock('https://restcountries.eu/rest/v2/all')
-        .get('')
+      nock('https://restcountries.eu/rest/v2')
+        .get('/all')
         .reply(200, getCountriesFixture)
     })
   

@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const handleWeatherSuccess = (data) => {
-  return `${data.weather[0].description} in ${data.name}`
+  return { message: `${data.weather[0].description} in ${data.name}` }
 }
 
 exports.getWeather = async (country, subdivision) => {

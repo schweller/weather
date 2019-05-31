@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 exports.getCountries = async () => {
-  const response = await axios(process.env.COUNTRIES_API_URI)
+  const response = await axios(`https://restcountries.eu/rest/v2/all`)
     .then(result => result.data)
   
   return response

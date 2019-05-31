@@ -15,10 +15,6 @@ const routes = require('./routes')
 const cors = require('cors')
 const limiter = require('express-rate-limit')
 
-// Controllers
-const countriesController = require('./controllers/countries')
-const weatherController = require('./controllers/weather')
-
 const rateLimiter = limiter({
   windowMs: process.env.TIME_PER_MAX_REQUESTS,
   max: process.env.MAX_REQUESTS
