@@ -2,17 +2,24 @@ const express = require('express')
 const countriesController = require('../controllers/countries')
 const router = express.Router()
 
-router.get(`/`, async (req, res) => {
+const getCountriesHandler = async (req, res) => {
   const countries = await countriesController.getCountries()
 
-  res.status(200).send(countries)
-})
+  res.status(200).send(JSON.stringify(countries))
+} 
 
-router.get(`/subdivisions/:country`, async (req, res) => {
+const getSubdivisionsByCountryHandler = async (req, res) => {
   const { country } = req.params
   const subdivisions = await countriesController.getSubdivisionsByCountry(country)
+  
+  res.status(200).send(JSON.stringify(subdivisions))
+}
 
-  res.status(200).send(subdivisions)
-})
+router.get(`/`, getCountriesHandler)
+router.get(`/subdivisions/:country`, getSubdivisionsByCountryHandler)
 
-module.exports = router
+module.exports = {
+  countriesRouter: router,
+  getCountriesHandler: getCountriesHandler,
+  getSubdivisionsByCountryHandler: getSubdivisionsByCountryHandler
+}

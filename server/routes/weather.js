@@ -2,7 +2,7 @@ const express = require('express')
 const weatherController = require('../controllers/weather')
 const router = express.Router()
 
-router.get(`/:country/:subdivision`, async (req, res) => {
+const getWeather = async (req, res) => {
   const { country, subdivision } = req.params
   const response = await weatherController.getWeather(country, subdivision)
 
@@ -11,6 +11,11 @@ router.get(`/:country/:subdivision`, async (req, res) => {
   } else {
     res.status(200).send(response)
   }
-})
+}
 
-module.exports = router
+router.get(`/:country/:subdivision`, getWeather)
+
+module.exports = {
+  weatherRouter: router,
+  getWeather
+}

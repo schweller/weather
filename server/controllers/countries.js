@@ -10,6 +10,6 @@ exports.getCountries = async () => {
 exports.getSubdivisionsByCountry = async(country) => {
   const response = await axios(`http://services.groupkt.com/state/get/${country}/all`)
     .then(result => result.data.RestResponse.result)
-  
+
   return response
 }
