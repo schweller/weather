@@ -33,6 +33,7 @@ const useWeatherFetch = (country, subdivision) => {
         const result = await axios(`${API_BASE}/weather/${country}/${subdivision}`)
           .then(response => response.data)
           .catch(error => handleError(error))
+        console.log(result)
         setWeather(result)
       }
       fetchWeather()
@@ -75,7 +76,7 @@ export const Weather = () => {
             weather ? 
               weather.error ? 
               <Typography variant="h4">{weather.error}</Typography> 
-              : <Typography variant="h4">{weather}</Typography>
+              : <Typography variant="h4">{weather.message}</Typography>
             : null 
           }
         </Grid>
